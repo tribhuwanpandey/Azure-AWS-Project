@@ -6,7 +6,9 @@
 trigger:
 - main
 
-pool: Pluto2025
+pool: Demo001
+
+
 
 steps:
 
@@ -42,18 +44,16 @@ steps:
 
 - task: S3Upload@1
   inputs:
-    awsCredentials: 'AzureDevOps-AWS'
+    awsCredentials: 'Azure-Devops-AWS'
     regionName: 'ap-south-1'
     bucketName: 'aws-s3-bucket-demo001'
     sourceFolder: '$(Build.ArtifactStagingDirectory)'
     globExpressions: '**'
     filesAcl: 'bucket-owner-full-control'
 
-
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'AzureDevOps-Azure'
+    azureSubscription: 'Azure-DevOps-Azure'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob upload-batch --account-name storageaccount123 --destination artifactcontainer --source $(Build.ArtifactStagingDirectory) --pattern **.war'
-
+    inlineScript: 'az storage blob upload-batch --account-name azure238 --destination container-1 --source $(Build.ArtifactStagingDirectory) --pattern **.war'
